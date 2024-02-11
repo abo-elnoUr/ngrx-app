@@ -1,0 +1,103 @@
+<div class="flex justify-center items-center h-full ">
+    <div class="w-full max-w-sm">
+        <div class="text-center">
+            <h1 class="block text-orange-400 text-xl text-center underline-offset-1  underline font-bold mt-16 mb-3">
+                Reactive Form
+            </h1>
+        </div>
+        @if (user) {
+        <pre>{{user | json}}</pre>
+        }
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="stand">
+                Standalone Control
+            </label>
+            <input [formControl]="standControl"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="stand" type="text" placeholder="Enter any thing to test standalone control.." />
+        </div>
+        <form (ngSubmit)="onSubmit($event)" [formGroup]="form" class="bg-white shadow-lg rounded px-8 pt-1 pb-8 mb-4">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+                    Name
+                </label>
+                <input formControlName="name"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="name" type="text" placeholder="Enter your name" />
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="age">
+                    Age
+                </label>
+                <input formControlName="age"
+                    class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="age" type="number" placeholder="Enter your password" />
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="job">
+                    Job Title
+                </label>
+                <input formControlName="job"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="job" type="text" placeholder="Enter your job" />
+            </div>
+
+
+            <fieldset formArrayName="phones" class="border p-4 rounded">
+                <legend class="text-lg font-semibold text-gray-800 mb-4">Phones</legend>
+                @for (control of Phones.controls; track $index;let first= $first; let last = $last) {
+                <div class="mb-4" [formGroupName]="$index">
+                    <label [for]="'phone{{$index}}'" class="block text-gray-600 text-sm font-medium mb-2">Phone</label>
+                    <div class="flex gap-x-2">
+                        <select formControlName="label"
+                            class="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                            @for (select of phoneLabels; track $index) {
+                            <option [value]="select">{{select}}</option>
+                            }
+                        </select>
+
+                        <input type="text" formControlName="phone" placeholder="Enter phone" [id]="'phone{{$index}}'" n
+                            class="w-full px-3  border rounded-md focus:outline-none  focus:border-blue-500" required>
+                        <span (click)="addPhoneControl()"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold flex items-center px-4 rounded focus:outline-none focus:shadow-outline">
+                            +
+                        </span>
+                        @if (!first) {
+                        <span (click)="removePhoneControl($index)"
+                            class="bg-red-500 hover:bg-red-700 text-white font-bold flex items-center px-4 rounded focus:outline-none focus:shadow-outline">
+                            -
+                        </span>
+                        }
+                    </div>
+                </div>
+                }
+
+            </fieldset>
+            <fieldset formGroupName="skills" class="border p-4 rounded">
+                <legend class="text-lg font-semibold text-gray-800 mb-4">User Skills</legend>
+
+                @for (skill of skils$ | async; track $index) {
+                @defer {
+                <div class="flex items-center space-x-2 mb-2">
+                    <input [id]="skill" [formControlName]="skill" type="checkbox" class="form-checkbox text-blue-500">
+                    <label [for]="skill" class="text-gray-700">{{skill}}</label>
+                </div>
+                }
+                @loading {
+                <span class="text-gray font-semibold">loading...</span>
+                }
+                }
+
+            </fieldset>
+
+            <div class="flex items-center justify-end mt-4">
+                <button
+                    class="bg-[#F7CA00] hover:bg-[#F7CA00aa] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="button">
+                    Submit
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>

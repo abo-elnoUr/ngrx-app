@@ -17,5 +17,9 @@ export const routes: Routes = [
         path: 'login',
         loadComponent: () => import ('./auth/login/login.component').then( m => m.LoginComponent),
         // canActivate: [isLoggingGuard]
+    },
+    {
+        path: 'reactive-form',
+        loadComponent: () => import ('./pages/forms/reactive-forms/reactive-forms.component').then( c => c.ReactiveFormsComponent )
     }
 ];
