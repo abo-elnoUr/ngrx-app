@@ -1,7 +1,7 @@
-<div class="flex justify-center items-center h-full ">
+<div id="parent" class="flex justify-center items-center h-full ">
     <div class="w-full max-w-sm">
         <div class="text-center">
-            <h1 class="block text-orange-400 text-xl text-center underline-offset-1  underline font-bold mt-16 mb-3">
+            <h1 class="block text-orange-400 text-2xl tracking-wider text-center underline-offset-3  underline font-bold mt-16 mb-3">
                 Reactive Form
             </h1>
         </div>
@@ -9,6 +9,8 @@
         <pre>{{user | json}}</pre>
         }
         <div class="mb-4">
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" [(ngModel)]="val" [value]="val" [ngModelOptions]="{ standalone: true }" >
+            {{ val }}
             <label class="block text-gray-700 text-sm font-bold mb-2" for="stand">
                 Standalone Control
             </label>

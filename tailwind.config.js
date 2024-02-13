@@ -21,7 +21,7 @@ module.exports = {
       },
     },
     fontFamily: {
-      Montserrat: 'Montserrat'
+      Cairo: 'Cairo'
     }
   },
   plugins: [],

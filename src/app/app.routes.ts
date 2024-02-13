@@ -7,7 +7,7 @@ export const routes: Routes = [
     { 
         path: '',
         loadComponent: () => import ('./pages/home/home.component').then( m => m.HomeComponent),
-        // canActivate: [authGuard]
+        data: { animation: 'routeAnimations' }
     },
     {
         path: 'register',
@@ -16,10 +16,10 @@ export const routes: Routes = [
     {
         path: 'login',
         loadComponent: () => import ('./auth/login/login.component').then( m => m.LoginComponent),
-        // canActivate: [isLoggingGuard]
     },
     {
         path: 'reactive-form',
-        loadComponent: () => import ('./pages/forms/reactive-forms/reactive-forms.component').then( c => c.ReactiveFormsComponent )
+        loadComponent: () => import ('./pages/forms/reactive-forms/reactive-forms.component').then( c => c.ReactiveFormsComponent ),
+        data: { animation: 'routeAnimations' }
     }
 ];

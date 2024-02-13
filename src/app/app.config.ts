@@ -8,6 +8,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { authFeatureKey, authReducer } from './auth/store/reducers';
 import { provideHttpClient } from '@angular/common/http';
 import { provideEffects } from '@ngrx/effects';
+import { provideAnimations } from '@angular/platform-browser/animations'
 
 import localeAr from '@angular/common/locales/ar-EG'
 import { registerLocaleData } from '@angular/common'
@@ -16,6 +17,7 @@ registerLocaleData(localeAr)
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAnimations(),
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(),
     provideStore(),

@@ -1,9 +1,10 @@
 import { AsyncPipe, JsonPipe, NgFor } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, FormRecord, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormRecord, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs';
 import { UserService } from '../../../shared/services/user.service';
+import { AnimationService } from '../../../shared/animation/animation.service';
 
 @Component({
   selector: 'app-reactive-forms',
@@ -12,13 +13,15 @@ import { UserService } from '../../../shared/services/user.service';
     ReactiveFormsModule,
     NgFor,
     JsonPipe,
-    AsyncPipe
+    AsyncPipe,
+    FormsModule
   ],
   templateUrl: './reactive-forms.component.html',
-  styleUrl: './reactive-forms.component.css'
+  styleUrl: './reactive-forms.component.css',
+
 })
 export class ReactiveFormsComponent implements OnInit {
-
+val: string = ''
   phoneLabels = ['Main', 'Mobile', 'Work', 'Home']
   user: any
   skils$!: Observable<string[]>
@@ -44,7 +47,8 @@ export class ReactiveFormsComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService
+    private userService: UserService,
+    private f: AnimationService
   ) { }
 
   ngOnInit(): void {
