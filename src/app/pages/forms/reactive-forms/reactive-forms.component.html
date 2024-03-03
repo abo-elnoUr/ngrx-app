@@ -1,7 +1,8 @@
 <div id="parent" class="flex justify-center items-center h-full ">
     <div class="w-full max-w-sm">
         <div class="text-center">
-            <h1 class="block text-orange-400 text-2xl tracking-wider text-center underline-offset-3  underline font-bold mt-16 mb-3">
+            <h1
+                class="block text-orange-400 text-2xl tracking-wider text-center underline-offset-3  underline font-bold mt-16 mb-3">
                 Reactive Form
             </h1>
         </div>
@@ -9,14 +10,13 @@
         <pre>{{user | json}}</pre>
         }
         <div class="mb-4">
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" [(ngModel)]="val" [value]="val" [ngModelOptions]="{ standalone: true }" >
-            {{ val }}
             <label class="block text-gray-700 text-sm font-bold mb-2" for="stand">
                 Standalone Control
             </label>
             <input [formControl]="standControl"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="stand" type="text" placeholder="Enter any thing to test standalone control.." />
+                
         </div>
         <form (ngSubmit)="onSubmit($event)" [formGroup]="form" class="bg-white shadow-lg rounded px-8 pt-1 pb-8 mb-4">
             <div class="mb-4">
@@ -26,6 +26,22 @@
                 <input formControlName="name"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="name" type="text" placeholder="Enter your name" />
+                    @if (form.controls.name.errors && form.controls.name.dirty) {
+                        @if (form.controls.name.hasError('minlength')) {
+                            <span class="input-error">you enter {{ form.controls.name.errors['minlength']?.actualLength }} from {{ form.controls.name.errors['minlength']?.requiredLength }} char</span>
+                        }
+                        <br>
+                        @if (form.controls.name.hasError('required')) {
+                            <span class="input-error">name is required</span>
+                        }
+                        <br>
+                        @if (form.controls.name.hasError('pattern')) {
+                            <span class="input-error">only letters, numbers, _ and . is allowed</span>
+                        }
+                        @if (form.controls.name.hasError('banWords')) {
+                            <span class="input-error">this word '{{form.controls.name.errors['banWords']?.bannedWord}}' is banned</span>
+                        }
+                    }
             </div>
             <div class="mb-6">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="age">
@@ -34,6 +50,19 @@
                 <input formControlName="age"
                     class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="age" type="number" placeholder="Enter your password" />
+                    @if ( form.controls.age.dirty) {
+                        @if (form.controls.age.hasError('min')) {
+                            <span class="input-error">
+                                min is 18 years
+                            </span>
+                        }
+                        <br>
+                        @if (form.controls.age.hasError('required')) {
+                            <span class="input-error">
+                                age is required
+                            </span>
+                        }
+                    }
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="job">
@@ -42,10 +71,19 @@
                 <input formControlName="job"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="job" type="text" placeholder="Enter your job" />
+                    @if (form.controls.job.errors && form.controls.job.dirty) {
+                        @if (form.controls.job.hasError('pattern')) {
+                            <span class="input-error">you must enter 2 capital char and 8 numbers</span>
+                        }
+                        <br>
+                        @if (form.controls.job.hasError('required')) {
+                            <span class="input-error">job is required</span>
+                        }
+                    }
             </div>
 
 
-            <fieldset formArrayName="phones" class="border p-4 rounded">
+            <!-- <fieldset formArrayName="phones" class="border p-4 rounded">
                 <legend class="text-lg font-semibold text-gray-800 mb-4">Phones</legend>
                 @for (control of Phones.controls; track $index;let first= $first; let last = $last) {
                 <div class="mb-4" [formGroupName]="$index">
@@ -77,25 +115,17 @@
             </fieldset>
             <fieldset formGroupName="skills" class="border p-4 rounded">
                 <legend class="text-lg font-semibold text-gray-800 mb-4">User Skills</legend>
-
                 @for (skill of skils$ | async; track $index) {
-                @defer {
                 <div class="flex items-center space-x-2 mb-2">
                     <input [id]="skill" [formControlName]="skill" type="checkbox" class="form-checkbox text-blue-500">
                     <label [for]="skill" class="text-gray-700">{{skill}}</label>
                 </div>
                 }
-                @loading {
-                <span class="text-gray font-semibold">loading...</span>
-                }
-                }
-
-            </fieldset>
-
+            </fieldset> -->
             <div class="flex items-center justify-end mt-4">
                 <button
                     class="bg-[#F7CA00] hover:bg-[#F7CA00aa] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    type="button">
+                    type="submit">
                     Submit
                 </button>
             </div>

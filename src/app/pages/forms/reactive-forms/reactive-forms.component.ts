@@ -1,10 +1,10 @@
 import { AsyncPipe, JsonPipe, NgFor } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, FormRecord, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormRecord, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs';
 import { UserService } from '../../../shared/services/user.service';
-import { AnimationService } from '../../../shared/animation/animation.service';
+import { banWords } from '../custom-validator/band-words.validator';
 
 @Component({
   selector: 'app-reactive-forms',
@@ -14,14 +14,14 @@ import { AnimationService } from '../../../shared/animation/animation.service';
     NgFor,
     JsonPipe,
     AsyncPipe,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './reactive-forms.component.html',
   styleUrl: './reactive-forms.component.css',
 
 })
 export class ReactiveFormsComponent implements OnInit {
-val: string = ''
+ val: string = ''
   phoneLabels = ['Main', 'Mobile', 'Work', 'Home']
   user: any
   skils$!: Observable<string[]>
@@ -29,13 +29,13 @@ val: string = ''
   standControl = new FormControl('')
 
   form = new FormGroup({
-    name: new FormControl(''),
-    age: new FormControl(null),
-    job: new FormControl(''),
+    name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern(/^[\w.]+$/), banWords]),
+    age: new FormControl(null, [Validators.min(18), Validators.required]),
+    job: new FormControl('', [Validators.required, Validators.pattern(/^[A-Z]{2}[0-9]{8}$/)]),
     phones: new FormArray([
       new FormGroup({
-        label: new FormControl(this.phoneLabels[0], { nonNullable: true }),
-        phone: new FormControl(null)
+        label: new FormControl(this.phoneLabels[0]),
+        phone: new FormControl('')
       })
     ]),
     skills: new FormRecord<FormControl<boolean>>({})
@@ -48,7 +48,6 @@ val: string = ''
   constructor(
     private http: HttpClient,
     private userService: UserService,
-    private f: AnimationService
   ) { }
 
   ngOnInit(): void {
@@ -92,7 +91,13 @@ val: string = ''
   }
 
   onSubmit(e: Event) {
-    console.log(this.form.getRawValue());
+    console.log(this.form);
+    if (!this.form.valid) {
+      
+      this.form.markAllAsTouched()
+    }else{
+      console.log(this.form.getRawValue());
+    }
   }
 
 
