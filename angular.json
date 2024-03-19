@@ -10,6 +10,10 @@
           "ar-EG": {
             "translation": "src/locale/messages.ar.xlf",
             "baseHref": "/ar"
+          },
+          "en-US": {
+            "translation": "src/locale/messages.en.xlf",
+            "baseHref": "/en"
           }
         }
       },
@@ -52,7 +56,8 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "statsJson": true
             },
             "development": {
               "optimization": false,

@@ -1,7 +1,16 @@
 {
     "xliffmergeOptions": {
-      "srcDir": "src",
+      "srcDir": "src/locale",
       "genDir": "src/locale",
-      "languages": ["en", "ar"]
+      "languages": [
+        {
+          "src": "en",
+          "desc": "English"
+        },
+        {
+          "src": "ar",
+          "desc": "Arabic"
+        }
+      ]
     }
   }

@@ -6,8 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "build:stats": "ng build --stats-json",
-    "analyze": "webpack-bundle-analyzer dist/ngrx-app/browser/stats.json",
     "watch": "ng build --watch --configuration development",
+    "analyze": "webpack-bundle-analyzer dist/ngrx-app/browser/stats.json",
     "test": "ng test"
   },
   "private": true,
@@ -33,6 +33,7 @@
     "@angular/cli": "^17.2.2",
     "@angular/compiler-cli": "^17.2.3",
     "@angular/localize": "^17.2.3",
+    "@biesbjerg/ngx-translate-extract": "^7.0.4",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
